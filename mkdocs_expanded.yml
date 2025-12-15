@@ -1,0 +1,87 @@
+site_name: prune-code
+site_url: https://github.com/jon-chun/prune-code  # Update if you have a custom domain
+site_author: Jon Chun
+site_description: Filtered, context-optimized repository copies for LLM-friendly context engineering
+
+repo_name: jon-chun/prune-code
+repo_url: https://github.com/jon-chun/prune-code
+edit_uri: edit/main/docs/  # Enables "Edit this page" links
+
+theme:
+  name: material
+  features:
+    - navigation.tabs          # Top-level tabs for main sections
+    - navigation.tabs.sticky   # Keeps tabs visible when scrolling
+    - navigation.sections      # Groups sections in sidebar on wide screens
+    - navigation.expand        # Expand all sections by default (optional)
+    - navigation.indexes       # Allows index pages for sections
+    - toc.integrate            # Integrates TOC into sidebar
+    - content.code.annotate    # Enables code block annotations
+    - content.code.copy        # Copy buttons for code blocks
+  palette:
+    # Palette toggle for light/dark mode
+    - scheme: default
+      primary: indigo
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue grey
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+  favicon: assets/favicon.png  # Add if you have one
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            docstring_style: google  # or sphinx/numpy if preferred
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:      # Math support (optional, requires JS)
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details          # Collapsible admonitions (???, !!!)
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true   # Cleaner tab style
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - User Manual: user-manual.md
+  - Technical Specs: tech-specs.md
+  - Edge Cases & FAQ: edge-cases.md
+  - API Reference: api-reference.md
