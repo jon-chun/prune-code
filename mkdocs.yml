@@ -1,0 +1,46 @@
+site_name: prune-code
+site_url: https://github.com/jon-chun/prune-code
+site_author: Jon Chun
+site_description: Filtered, context-optimized repository copies for LLM-friendly context engineering
+
+repo_name: jon-chun/prune-code
+repo_url: https://github.com/jon-chun/prune-code
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.indexes
+    - toc.integrate
+    - content.code.annotate
+    - content.code.copy
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            docstring_style: google
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - User Manual: user-manual.md
+  - Configuration: configuration.md
+  - Technical Specs: tech-specs.md
+  - Edge Cases & FAQ: edge-cases.md
+  - API Reference: api-reference.md
