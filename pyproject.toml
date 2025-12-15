@@ -22,7 +22,9 @@ classifiers = [
   "Topic :: Utilities",
 ]
 dependencies = [
+  "build>=1.2.2.post1",
   "PyYAML>=6.0",
+  "twine>=6.1.0",
 ]
 
 [project.optional-dependencies]
