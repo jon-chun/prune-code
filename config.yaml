@@ -15,9 +15,9 @@ whitelist:
     - "README.md"
     - "pyproject.toml"
     - "config.yaml"
-    - "src/step5_qa-gold-dataset.py"
   directories:
-    - "src/qa_gold_lib/"
+    - "src/"
+    - "docs/"
     - "tests/"
 
 blacklist:
@@ -41,6 +41,7 @@ blacklist:
     - '_v\d{1,2}\.py$'
     - '~$'
     - '\.bak$'
+    - '^utils_*'
   directories:
     - "docs/"
     - "docs-dev"
