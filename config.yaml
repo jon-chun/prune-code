@@ -1,0 +1,71 @@
+# Prune Code Configuration
+# Whitelist-first filtering with a Tiered Priority Cascade
+# See docs/user-manual.md for full documentation.
+
+ai_coding_env: 'chat'
+
+# Maximum file size in megabytes (Tier 4 sanity check for in-scope files)
+max_file_size_mb: 5
+
+# Destination overwrite behavior: prompt | force | fail
+overwrite_mode: "prompt"
+
+whitelist:
+  files:
+    - "README.md"
+    - "pyproject.toml"
+    - "config.yaml"
+  directories:
+    - "src/"
+    - "docs/"
+    - "tests/"
+
+blacklist:
+  files:
+    - ".env"
+    - ".env.local"
+    - ".DS_Store"
+    - "poetry.lock"
+    - "uv.lock"
+  extensions:
+    - ".png"
+    - ".jpg"
+    - ".jpeg"
+    - ".pdf"
+    - ".log"
+    - ".tmp"
+    - ".pyc"
+  patterns:
+    - '_v\d{1,2}\.py$'
+    - '~$'
+    - '\.bak$'
+  directories:
+    - ".git/"
+    - "__pycache__/"
+    - ".pytest_cache/"
+    - ".mypy_cache/"
+    - ".tox/"
+    - "node_modules/"
+    - ".venv/"
+    - "venv/"
+    - "dist/"
+    - "build/"
+    - "*.egg-info/"
+
+  # blacklist any filename containing a valid YYYYMMDD date stamp
+  datetime_stamp_yyyymmdd: true
+
+  # case-insensitive filename substring vetoes
+  filename_substrings:
+    - "BACKUP"
+    - "BU"
+    - "OLD"
+    - "ORIGINAL"
+    - "INITIAL"
+
+data_sampling:
+  enabled: true
+  target_extensions: [".csv", ".tsv", ".json", ".jsonl"]
+  include_header: true
+  head_rows: 5
+  tail_rows: 5

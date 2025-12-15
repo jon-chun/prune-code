@@ -1,0 +1,23 @@
+[project]
+name = "prune-code"
+version = "2.0.1"
+description = "Prune Code: create filtered, context-optimized copies of repositories for LLM workflows."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+authors = [{ name = "Prune Code Contributors" }]
+keywords = ["cli", "repository", "llm", "context", "filter", "sampling"]
+dependencies = [
+  "PyYAML>=6.0",
+]
+
+[project.scripts]
+prune-code = "prune_code.cli:main"
+
+[build-system]
+requires = ["hatchling>=1.22.0"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
