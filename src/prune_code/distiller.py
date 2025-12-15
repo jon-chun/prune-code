@@ -55,6 +55,8 @@ class RepositoryDistiller:
         rel_str = str(rel).replace('\\', '/')
         for pat in patterns:
             p = str(pat).strip().lstrip('./')
+            if p in ('', '.'):  # repo root / match-all
+                return True
             if p.endswith('/'):
                 if rel_str.startswith(p.rstrip('/')):
                     return True
@@ -84,26 +86,40 @@ class RepositoryDistiller:
         return self.config.data_sampling.enabled and path.suffix.lower() in self.config.data_sampling.target_extensions
 
     def _tier2_veto(self, rel: Path, filename: str) -> Optional[Tuple[FilterAction, str]]:
+        # Explicit blacklist file rules
         if self._explicit_blacklist_file(rel):
             return FilterAction.SKIP, 'tier2_blacklist_file'
+
+        # Regex blacklist rules (applied to the filename)
         for pat in self.config.blacklist.patterns:
             if pat.search(filename):
                 return FilterAction.SKIP, f'tier2_blacklist_pattern:{pat.pattern}'
+
+        # Datestamp veto
         if self.config.blacklist.datetime_stamp_yyyymmdd:
             m = _YYYYMMDD_RE.search(filename)
             if m:
                 token = m.group(0)
                 if _is_valid_yyyymmdd(token):
                     return FilterAction.SKIP, f'tier2_blacklist_datetime_stamp:{token}'
-        upper = filename.upper()
+
+        # Token-based filename substring vetoes (avoid false positives like OLD in GOLD)
+        stem_upper = Path(filename).stem.upper()
+        tokens = [t for t in re.split(r'[^A-Z0-9]+', stem_upper) if t]
+        token_set = set(tokens)
+
         for tok in (self.config.blacklist.filename_substrings or []):
-            if str(tok).upper() in upper:
+            tok_u = str(tok).upper()
+            if tok_u in token_set:
                 return FilterAction.SKIP, f'tier2_blacklist_filename_substring:{tok}'
+
         return None
 
     def _tier1_include(self, rel: Path, path: Path) -> Optional[Tuple[FilterAction, str]]:
         if self._explicit_whitelist_file(rel):
-            return (FilterAction.SAMPLE, 'tier1_whitelist_file_sampled') if self._should_sample(path) else (FilterAction.COPY, 'tier1_whitelist_file')
+            if self._should_sample(path):
+                return (FilterAction.SAMPLE, 'tier1_whitelist_file_sampled')
+            return (FilterAction.COPY, 'tier1_whitelist_file')
         return None
 
     def determine_action(self, path: Path, base: Path) -> Tuple[FilterAction, Optional[str]]:

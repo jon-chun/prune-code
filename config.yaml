@@ -68,7 +68,6 @@ blacklist:
     - "OLD"
     - "ORIGINAL"
     - "INITIAL"
-    - "FINAL"
 
 data_sampling:
   enabled: true
