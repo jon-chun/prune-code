@@ -15,9 +15,9 @@ whitelist:
     - "README.md"
     - "pyproject.toml"
     - "config.yaml"
+    - "src/step5_qa-gold-dataset.py"
   directories:
-    - "src/"
-    - "docs/"
+    - "src/qa_gold_lib/"
     - "tests/"
 
 blacklist:
@@ -36,10 +36,16 @@ blacklist:
     - ".tmp"
     - ".pyc"
   patterns:
+    - '^step[1-4]'
+    - '^step5_.*_v\d{1,2}\.py$'
     - '_v\d{1,2}\.py$'
     - '~$'
     - '\.bak$'
   directories:
+    - "docs/"
+    - "docs-dev"
+    - "docs-paper"
+    - "docs-research"
     - ".git/"
     - "__pycache__/"
     - ".pytest_cache/"
@@ -62,6 +68,7 @@ blacklist:
     - "OLD"
     - "ORIGINAL"
     - "INITIAL"
+    - "FINAL"
 
 data_sampling:
   enabled: true

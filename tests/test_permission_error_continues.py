@@ -25,6 +25,10 @@ def test_unreadable_file_increments_errors_and_continues(tmp_path: Path):
 
     bad.chmod(0)
 
+    # In some environments (e.g., running as root), chmod may not make the file unreadable.
+    if os.access(bad, os.R_OK):
+        pytest.skip('Cannot reliably make file unreadable in this environment')
+
     cfg = DistillerConfig(
         whitelist=WhitelistConfig(files=[], directories=["./"]),
         blacklist=BlacklistConfig(),
